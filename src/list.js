@@ -34,7 +34,8 @@ class List extends Component {
   }
 
   render() {
-    const { children, position } = this.props;
+    const { position } = this.props;
+    const children = this.props.children.reduce((acc, c) => acc.concat(c), []);
 
     return (
       <Modal
