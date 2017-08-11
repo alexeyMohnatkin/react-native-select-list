@@ -45,10 +45,19 @@ class Select extends Component {
     });
 
     this.props.onSelect(value, text);
+		this.props.onBlur();
   }
 
   toggleVisibility() {
-    this.setState({visible: this.state.visible ? 0 : 1});
+		const visible = this.state.visible ? 0 : 1;
+		this.setState({ visible }, () => {
+			if (visible) {
+				this.props.onFocus();
+			}
+			if (!visible) {
+				this.props.onBlur();
+			}
+		});
   }
 
   render() {
@@ -131,7 +140,9 @@ Select.propTypes = {
   listPosition: React.PropTypes.oneOf(['down', 'up']),
   padding: React.PropTypes.number,
   zIndex: React.PropTypes.number,
-  onSelect: React.PropTypes.func
+  onSelect: React.PropTypes.func,
+  onFocus: React.PropTypes.func,
+  onBlur: React.PropTypes.func,
 };
 
 Select.defaultProps = {
@@ -139,7 +150,9 @@ Select.defaultProps = {
   listPosition: 'down',
   padding: 10,
   zIndex: 999,
-  onSelect: () => { }
+  onSelect: () => { },
+  onFocus: () => { },
+  onBlur: () => { },
 };
 
 module.exports = Select;
