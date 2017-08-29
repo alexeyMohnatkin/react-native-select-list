@@ -18,13 +18,18 @@ npm i react-native-select-list --save-dev
 ## Usage
 
 ```js
-import { Select, Option } from 'react-native-select-list';
+import { Select } from 'react-native-select-list';
 
-<Select>
-  <Option value={1}>List item 1</Option>
-  <Option value={2}>List item 2</Option>
-  <Option value={3}>List item 3</Option>
-</Select>
+const options = [
+  {label: 'option1', value: 'value1'},
+  {label: 'option2', value: 'value2'},
+  {label: 'option3', value: 'value3'},
+]
+
+<Select
+  options={options}
+  value="value1"
+/>
 ```
 
 ### Select properties

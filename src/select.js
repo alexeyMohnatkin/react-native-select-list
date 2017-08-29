@@ -3,23 +3,17 @@ import { StyleSheet, View, Text, Dimensions, Platform, TouchableWithoutFeedback 
 
 import Caret from './caret';
 import List from './list';
+import Option from './option';
 
 const window = Dimensions.get('window');
 
 class Select extends Component {
   constructor(props) {
-    super(props);
-
-    let defaultValue = props.default;
-
-    if (!defaultValue) {
-      defaultValue = props.children[0].props.children;
-    }
+		super(props);
 
     this.onOptionPressed = this.onOptionPressed.bind(this);
 
     this.state = {
-      value: defaultValue,
       visible: 0,
       listHeight: 0,
     }
@@ -61,7 +55,7 @@ class Select extends Component {
   }
 
   render() {
-    const { padding, caret } = this.props;
+    const { padding, caret, options, value } = this.props;
 
     let offset = 2*padding;
 
@@ -75,7 +69,10 @@ class Select extends Component {
       } else {
         offset += 15;
       }
-    }
+		}
+
+		const selectedOption = options.find(option => option.value === value);
+		const label = selectedOption ? selectedOption.label : '';
 
     return (
       <View
@@ -91,7 +88,7 @@ class Select extends Component {
               style={[this.props.selectTextStyle, {width: 222 - offset}]}
               numberOfLines={1}
               lineBreakMode='tail'
-            >{ this.state.value }</Text>
+            >{ label }</Text>
             <Caret element={caret} size={this.props.caretSize} color={this.props.caretColor} />
           </View>
         </TouchableWithoutFeedback>
@@ -105,7 +102,9 @@ class Select extends Component {
               onOverlayPress={this.toggleVisibility.bind(this)}
               onOptionPressed={this.onOptionPressed}
               >
-              { this.props.children }
+              { options.map((option, key) =>
+								<Option value={option.value} key={key}>{option.label}</Option>
+							) }
             </List>
             :
             null
