@@ -103,7 +103,13 @@ class Select extends Component {
               onOptionPressed={this.onOptionPressed}
               >
               { options.map((option, key) =>
-								<Option value={option.value} key={key}>{option.label}</Option>
+								<Option
+                  value={option.value}
+                  key={key}
+                  last={key===options.length-1}
+                >
+                  {option.label}
+                </Option>
 							) }
             </List>
             :
